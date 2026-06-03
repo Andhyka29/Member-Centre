@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const member = await prisma.user.findUnique({
-        where: { id: params.id },
+        where: { id: (await params).id },
         select: {
             id: true,
             name: true,
@@ -26,12 +26,12 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     }
 }
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const { name, email, noWa, alamat, kota, propinsi } = await req.json();
 
         const member = await prisma.user.update({
-        where: { id: params.id },
+        where: { id: (await params).id },
         data: { name, email, noWa, alamat, kota, propinsi }
         });
 
@@ -45,9 +45,9 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        await prisma.user.delete({ where: { id: params.id } });
+        await prisma.user.delete({ where: { id: (await params).id } });
         return NextResponse.json({ message: "Member berhasil dihapus" });
     } catch (error) {
         return NextResponse.json({ message: "Gagal menghapus member" }, { status: 500 });

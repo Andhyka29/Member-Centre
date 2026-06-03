@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Member {
+  id        String   @id @default(cuid())
+  nama      String
+  alamat    String?
+  kota      String?
+  provinsi  String?
+  noWa      String?  @map("no_wa")
+  email     String?  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([nama])
+  @@index([kota])
+  @@index([provinsi])
+  @@index([kota, provinsi])
+
+  @@map("members")
+}

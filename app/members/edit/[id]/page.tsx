@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 
 interface Member {
     id: string;
-    name: string;
+    nama: string;
     email: string;
     noWa?: string;
     alamat?: string;
     kota?: string;
-    propinsi?: string;
+    provinsi?: string;
 }
 
 export default function EditMemberPage({ params }: { params: { id: string } }) {
@@ -61,11 +61,11 @@ export default function EditMemberPage({ params }: { params: { id: string } }) {
         <form onSubmit={handleSubmit} className="backdrop-blur-2xl bg-white/5 rounded-3xl border border-white/10 p-8 space-y-5">
           <input
             type="text"
-            value={member.name || ''}
+            value={member.nama || ''}
             required
             placeholder="Full Name"
             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-400/50 transition"
-            onChange={(e) => setMember({ ...member, name: e.target.value })}
+            onChange={(e) => setMember({ ...member, nama: e.target.value })}
           />
 
           <input
@@ -104,9 +104,9 @@ export default function EditMemberPage({ params }: { params: { id: string } }) {
             <input
               type="text"
               placeholder="Province"
-              value={member.propinsi || ''}
+              value={member.provinsi || ''}
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-400/50 transition"
-              onChange={(e) => setMember({ ...member, propinsi: e.target.value })}
+              onChange={(e) => setMember({ ...member, provinsi: e.target.value })}
             />
           </div>
 
